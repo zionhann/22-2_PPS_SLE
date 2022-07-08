@@ -5,6 +5,9 @@
  * @from https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string/
  * @elapsed_time 45+min
  *  
+ * @ref 
+ * rohit221, "C++ Easiest solution fully Explained beats 58% 69%," LeetCode, Jul. 9, 2020. 
+ * [Online]. Available: https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string/discuss/726816/C%2B%2B-Easiest-solution-fully-Explained-beats-58-69
  */
 
 class Solution {
