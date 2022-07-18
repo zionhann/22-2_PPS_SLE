@@ -1,0 +1,92 @@
+package com.baekjoon;
+
+import java.util.*;
+import java.io.*;
+
+public class Main {
+
+    public static class Data{
+        private int a, b, c;
+        Data(int A, int B, int C) {
+            a = A;
+            b = B;
+            c = C;
+        }
+    }
+
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int A = Integer.parseInt(st.nextToken());
+        int B = Integer.parseInt(st.nextToken());
+        int C = Integer.parseInt(st.nextToken());
+
+        StringBuilder sb = new StringBuilder();
+        boolean[][] visited = new boolean[202][202];
+        boolean[] ans = new boolean[202];
+
+        Queue<Data> que = new LinkedList<>();
+
+        Data data = new Data(0, 0, C);
+        que.add(data);
+
+        while(!que.isEmpty()) {
+            Data now = que.peek();
+            que.poll();
+
+            if(visited[now.a][now.b])
+                continue;
+
+            visited[now.a][now.b] = true;
+
+            if(now.a == 0) {
+                ans[now.c] = true;
+            }
+            // for all cases:  a->b, a->c, b->a, b->c, c->a, c->b
+            if(now.a+now.b > B) {
+                que.add(new Data((now.a+now.b)-B,B,now.c));
+            }
+            else
+                que.add(new Data(0, now.a+now.b, now.c));
+
+            if(now.a+now.c > C) {
+                que.add(new Data((now.a+now.c)-C, now.b, now.c));
+            }
+            else
+                que.add(new Data(0, now.b, now.a+now.c));
+
+            if(now.b+now.a > A) {
+                que.add(new Data(A, now.a+now.b-A, now.c));
+            }
+            else
+                que.add(new Data(now.a+now.b, 0, now.c));
+
+            if(now.b+now.c > C) {
+                que.add(new Data(now.a, now.b+now.c-C, C));
+            }
+            else
+                que.add(new Data(now.a, 0, now.b+now.c));
+
+            if(now.c+now.a > A) {
+                que.add(new Data(A, now.b, now.c+now.a-A));
+            }
+            else
+                que.add(new Data(now.c+now.a, now.b, 0));
+
+            if(now.c+now.b > B) {
+                que.add(new Data(now.a, B, now.c+now.b - B));
+            }
+            else
+                que.add(new Data(now.a, 0, now.b+now.c));
+        }
+
+        for(int i=0; i<202; i++) {
+            if(ans[i])
+                sb.append(i).append(" ");
+        }
+        System.out.println(sb.toString());
+        br.close();
+    }
+}
